@@ -1,1 +1,0 @@
-'nj afqk ekgknefovnnef' привет
