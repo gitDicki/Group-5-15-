@@ -1,5 +1,3 @@
-#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
-
 import pygame
 import sys
 import random
