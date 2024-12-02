@@ -119,21 +119,15 @@ while True:
             if event.key == pygame.K_UP:
                 if y != 0:
                     y -= 1
-                    print(numbers[y][x])    
             if event.key == pygame.K_DOWN:
                 if y != 3:
                     y += 1
-                    print(numbers[y][x])
             if event.key == pygame.K_LEFT:
                 if x != 0:
                     x -= 1
-                    print(numbers[y][x])
             if event.key == pygame.K_RIGHT:
                 if x != 3:
                     x += 1
-                    print(numbers[y][x])
-
-
 
             if event.key == pygame.K_UP and\
                     (event.mod & pygame.KMOD_SHIFT):
@@ -206,8 +200,6 @@ while True:
                     pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
                     screen.fill(BLACK)  # Очистка экрана после задержки
                     pygame.display.flip()
-
-
 
     screen.fill(WHITE)
     draw_grid(x, y)
