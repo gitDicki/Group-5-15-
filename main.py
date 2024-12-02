@@ -1,3 +1,5 @@
+#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
+
 import pygame
 import sys
 import random
@@ -18,18 +20,13 @@ RED = (255, 0, 0)
 
 font = pygame.font.Font(None, 28)
 
-def endgame(game):
-    rows, cols = len(game), len(game[0])
-
-    for i in range(rows):
-        for j in range(cols - 1):
-            if game[i][j] >= game[i][j + 1]:
-                return 1
-
-    for i in range(rows - 1):
-        if game[i][cols - 1] >= game[i + 1][0]:
-            return 1
-    return 0
+def endgame(game, ideal):
+    fail = 0
+    for i in range(4):
+        for j in range(4):
+            if game[i][j] != ideal[i][j]:
+                fail += 1
+    return fail
 
 def draw_popup_message(message, color=WHITE):#Это для окна
     # Создание поверхности для текста
@@ -106,6 +103,13 @@ pygame.display.set_caption("Игра '15'")
 pygame.mixer.music.load("слава гойде тихо.mp3")
 pygame.mixer.music.play(-1)
 
+ideal = [[0] * 4 for row in range(4)]
+count = 1
+for i in range(4):
+    for j in range(4):
+        ideal[i][j] = count
+        count += 1
+ideal[3][3] = 0
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -119,21 +123,27 @@ while True:
             if event.key == pygame.K_UP:
                 if y != 0:
                     y -= 1
+                    print(numbers[y][x])    
             if event.key == pygame.K_DOWN:
                 if y != 3:
                     y += 1
+                    print(numbers[y][x])
             if event.key == pygame.K_LEFT:
                 if x != 0:
                     x -= 1
+                    print(numbers[y][x])
             if event.key == pygame.K_RIGHT:
                 if x != 3:
                     x += 1
+                    print(numbers[y][x])
+
+
 
             if event.key == pygame.K_UP and\
                     (event.mod & pygame.KMOD_SHIFT):
                     if numbers[y][x] == 0:
                         numbers[y][x], numbers[y+1][x] = numbers[y+1][x], numbers[y][x]
-                        if endgame(numbers) == 0:
+                        if endgame(numbers, ideal) == 0:
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
@@ -151,7 +161,7 @@ while True:
                     (event.mod & pygame.KMOD_SHIFT):
                     if numbers[y][x] == 0:
                         numbers[y][x], numbers[y-1][x] = numbers[y-1][x], numbers[y][x]
-                        if endgame(numbers) == 0:
+                        if endgame(numbers, ideal) == 0:
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
@@ -169,7 +179,7 @@ while True:
                     (event.mod & pygame.KMOD_SHIFT):
                     if numbers[y][x] == 0:
                         numbers[y][x], numbers[y][x+1] = numbers[y][x+1], numbers[y][x]
-                        if endgame(numbers) == 0:
+                        if endgame(numbers, ideal) == 0:
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
@@ -187,7 +197,7 @@ while True:
                     (event.mod & pygame.KMOD_SHIFT):
                 if numbers[y][x] == 0:
                         numbers[y][x], numbers[y][x-1] = numbers[y][x-1], numbers[y][x]
-                        if endgame(numbers) == 0:
+                        if endgame(numbers, ideal) == 0:
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
@@ -200,6 +210,8 @@ while True:
                     pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
                     screen.fill(BLACK)  # Очистка экрана после задержки
                     pygame.display.flip()
+
+
 
     screen.fill(WHITE)
     draw_grid(x, y)
