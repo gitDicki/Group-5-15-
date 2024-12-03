@@ -209,15 +209,6 @@ while True:
                     screen.fill(BLACK)  # Очистка экрана после задержки
                     pygame.display.flip()
 
-
-
-    screen.fill(WHITE)
-    draw_grid(x, y)
-    pygame.display.flip()
-                    pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
-                    screen.fill(BLACK)  # Очистка экрана после задержки
-                    pygame.display.flip()
-
     screen.fill(WHITE)
     draw_grid(x, y)
     pygame.display.flip()
