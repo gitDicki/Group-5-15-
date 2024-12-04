@@ -1,3 +1,5 @@
+#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
+
 import pygame
 import sys
 import random
@@ -15,7 +17,23 @@ GRAY = (200, 200, 200)
 CHET = (100, 100, 100)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-
+ORANGE = (255, 165, 0)
+YELLOW = (255, 255, 0)
+BRIGHT_BLUE = (0, 191, 255)
+BLUE = (0, 0, 255)
+PURPLE = (128, 0, 128)
+BROWN = (139, 69, 19)
+OLIVE = (128, 128, 0)
+GOLD = (218, 165, 32)
+LIME = (0, 255, 0)
+PINK = (255, 0, 255)
+MRAMOR = (250, 235, 215)
+STEEL = (70, 130, 180)
+DARKGREEN = (0, 100, 0)
+ANGEL = (100, 149, 237)
+Colors = [RED, ORANGE, YELLOW, GREEN, BRIGHT_BLUE, BLUE, PURPLE,
+              BROWN, OLIVE, GOLD, LIME, PINK, MRAMOR, STEEL, DARKGREEN, ANGEL]
+random.shuffle(Colors)
 font = pygame.font.Font(None, 28)
 
 def endgame(game, ideal):
@@ -25,7 +43,6 @@ def endgame(game, ideal):
             if game[i][j] != ideal[i][j]:
                 fail += 1
     return fail
-
 def draw_popup_message(message, color=WHITE):#Это для окна
     # Создание поверхности для текста
     text_surface = font.render(message, True, color)
@@ -42,18 +59,18 @@ def draw_popup_message(message, color=WHITE):#Это для окна
 
 #функция для отрисовки клеток
 def draw_grid(x2, y2):
+    counter = 0
     for row in range(GRID_SIZE):
         for col in range(GRID_SIZE):
             num = numbers[row][col]
             x = col * CELL_SIZE
             y = row * CELL_SIZE
-            
+            color = Colors[counter] if num != 0 else WHITE
+            counter += 1
             #определяем цвет квадрата
             if row == y2 and col == x2:
                 color = CHET  #цвет выделенного квадрата
-            else:
-                color = GRAY if num is not None else WHITE
-            
+
             #отрисовка квадратов
             pygame.draw.rect(screen, color, (x, y, CELL_SIZE, CELL_SIZE))
             
@@ -208,6 +225,8 @@ while True:
                     pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
                     screen.fill(BLACK)  # Очистка экрана после задержки
                     pygame.display.flip()
+
+
 
     screen.fill(WHITE)
     draw_grid(x, y)
