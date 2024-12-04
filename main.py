@@ -65,14 +65,12 @@ def draw_popup_message(message, color=WHITE):#Это для окна
 
 #функция для отрисовки клеток
 def draw_grid(x2, y2):
-    counter = 0
     for row in range(GRID_SIZE):
         for col in range(GRID_SIZE):
             num = numbers[row][col]
             x = col * CELL_SIZE
             y = row * CELL_SIZE
-            color = Colors[counter] if num != 0 else WHITE
-            counter += 1
+            color = Colors[0] if num != 0 else WHITE
             #определяем цвет квадрата
             if row == y2 and col == x2:
                 color = CHET  #цвет выделенного квадрата
