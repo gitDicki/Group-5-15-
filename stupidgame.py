@@ -1,3 +1,5 @@
+# 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
+
 import pygame
 import sys
 import random
@@ -15,8 +17,31 @@ GRAY = (200, 200, 200)
 CHET = (100, 100, 100)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-
+ORANGE = (255, 165, 0)
+YELLOW = (255, 255, 0)
+BRIGHT_BLUE = (0, 191, 255)
+BLUE = (0, 0, 255)
+PURPLE = (128, 0, 128)
+BROWN = (139, 69, 19)
+OLIVE = (128, 128, 0)
+GOLD = (218, 165, 32)
+LIME = (0, 255, 0)
+PINK = (255, 0, 255)
+MRAMOR = (250, 235, 215)
+STEEL = (70, 130, 180)
+DARKGREEN = (0, 100, 0)
+ANGEL = (100, 149, 237)
+Colors = [RED, ORANGE, YELLOW, GREEN, BRIGHT_BLUE, BLUE, PURPLE,
+          BROWN, OLIVE, GOLD, LIME, PINK, MRAMOR, STEEL, DARKGREEN, ANGEL]
+random.shuffle(Colors)
 font = pygame.font.Font(None, 28)
+pygame.mixer.init()
+move_sound = pygame.mixer.Sound("talk.mp3")
+move_sound.set_volume(0.5)
+shift_sound = pygame.mixer.Sound("enderman_teleport.mp3")
+shift_sound.set_volume(0.25)
+win_sound = pygame.mixer.Sound("Звук case_reveal_legendary_01.mp3")
+win_sound.set_volume(0.25)
 
 
 def endgame(game, ideal):
@@ -45,17 +70,17 @@ def draw_popup_message(message, color=WHITE):  # Это для окна
 
 # функция для отрисовки клеток
 def draw_grid(x2, y2):
+    counter = 0
     for row in range(GRID_SIZE):
         for col in range(GRID_SIZE):
             num = numbers[row][col]
             x = col * CELL_SIZE
             y = row * CELL_SIZE
-
+            color = Colors[counter] if num != 0 else WHITE
+            counter += 1
             # определяем цвет квадрата
             if row == y2 and col == x2:
                 color = CHET  # цвет выделенного квадрата
-            else:
-                color = GRAY if num is not None else WHITE
 
             # отрисовка квадратов
             pygame.draw.rect(screen, color, (x, y, CELL_SIZE, CELL_SIZE))
@@ -113,7 +138,6 @@ for i in range(4):
         ideal[i][j] = count
         count += 1
 ideal[3][3] = 0
-g = 0
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -126,28 +150,34 @@ while True:
             if event.key == pygame.K_UP:
                 if y != 0:
                     y -= 1
+                    move_sound.play()
                     print(numbers[y][x])
             if event.key == pygame.K_DOWN:
                 if y != 3:
                     y += 1
+                    move_sound.play()
                     print(numbers[y][x])
             if event.key == pygame.K_LEFT:
                 if x != 0:
                     x -= 1
+                    move_sound.play()
                     print(numbers[y][x])
             if event.key == pygame.K_RIGHT:
                 if x != 3:
                     x += 1
+                    move_sound.play()
                     print(numbers[y][x])
 
             if event.key == pygame.K_UP and \
                     (event.mod & pygame.KMOD_SHIFT):
-                if g == 0:
+                if 0 == 0:
                     numbers[y][x], numbers[y + 1][x] = numbers[y + 1][x], numbers[y][x]
+                    shift_sound.play()
                     if endgame(numbers, ideal) == 0:
+                        win_sound.play()
                         draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                         pygame.display.flip()  # Обновление экрана
-                        pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                        pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                         screen.fill(BLACK)  # Очистка экрана после задержки
                         pygame.display.flip()
                         sys.exit()
@@ -160,12 +190,14 @@ while True:
 
             if event.key == pygame.K_DOWN and \
                     (event.mod & pygame.KMOD_SHIFT):
-                if g == 0:
+                if 0 == 0:
                     numbers[y][x], numbers[y - 1][x] = numbers[y - 1][x], numbers[y][x]
+                    shift_sound.play()
                     if endgame(numbers, ideal) == 0:
+                        win_sound.play()
                         draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                         pygame.display.flip()  # Обновление экрана
-                        pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                        pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                         screen.fill(BLACK)  # Очистка экрана после задержки
                         pygame.display.flip()
                         sys.exit()
@@ -178,12 +210,14 @@ while True:
 
             if event.key == pygame.K_LEFT and \
                     (event.mod & pygame.KMOD_SHIFT):
-                if g == 0:
+                if 0 == 0:
                     numbers[y][x], numbers[y][x + 1] = numbers[y][x + 1], numbers[y][x]
+                    shift_sound.play()
                     if endgame(numbers, ideal) == 0:
+                        win_sound.play()
                         draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                         pygame.display.flip()  # Обновление экрана
-                        pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                        pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                         screen.fill(BLACK)  # Очистка экрана после задержки
                         pygame.display.flip()
                         sys.exit()
@@ -196,12 +230,14 @@ while True:
 
             if event.key == pygame.K_RIGHT and \
                     (event.mod & pygame.KMOD_SHIFT):
-                if g == 0:
+                if 0 == 0:
                     numbers[y][x], numbers[y][x - 1] = numbers[y][x - 1], numbers[y][x]
+                    shift_sound.play()
                     if endgame(numbers, ideal) == 0:
+                        win_sound.play()
                         draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                         pygame.display.flip()  # Обновление экрана
-                        pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                        pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                         screen.fill(BLACK)  # Очистка экрана после задержки
                         pygame.display.flip()
                         sys.exit()
