@@ -35,7 +35,13 @@ Colors = [RED, ORANGE, YELLOW, GREEN, BRIGHT_BLUE, BLUE, PURPLE,
               BROWN, OLIVE, GOLD, LIME, PINK, MRAMOR, STEEL, DARKGREEN, ANGEL]
 random.shuffle(Colors)
 font = pygame.font.Font(None, 28)
-
+pygame.mixer.init()
+move_sound = pygame.mixer.Sound("talk.mp3")
+move_sound.set_volume(0.5)
+shift_sound = pygame.mixer.Sound("enderman_teleport.mp3")
+shift_sound.set_volume(0.25)
+win_sound = pygame.mixer.Sound("Звук case_reveal_legendary_01.mp3")
+win_sound.set_volume(0.25)
 def endgame(game, ideal):
     fail = 0
     for i in range(4):
@@ -138,18 +144,22 @@ while True:
             if event.key == pygame.K_UP:
                 if y != 0:
                     y -= 1
-                    print(numbers[y][x])    
+                    move_sound.play()
+                    print(numbers[y][x])
             if event.key == pygame.K_DOWN:
                 if y != 3:
                     y += 1
+                    move_sound.play()
                     print(numbers[y][x])
             if event.key == pygame.K_LEFT:
                 if x != 0:
                     x -= 1
+                    move_sound.play()
                     print(numbers[y][x])
             if event.key == pygame.K_RIGHT:
                 if x != 3:
                     x += 1
+                    move_sound.play()
                     print(numbers[y][x])
 
 
@@ -158,7 +168,9 @@ while True:
                     (event.mod & pygame.KMOD_SHIFT):
                     if numbers[y][x] == 0:
                         numbers[y][x], numbers[y+1][x] = numbers[y+1][x], numbers[y][x]
+                        shift_sound.play()
                         if endgame(numbers, ideal) == 0:
+                            win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
@@ -176,7 +188,9 @@ while True:
                     (event.mod & pygame.KMOD_SHIFT):
                     if numbers[y][x] == 0:
                         numbers[y][x], numbers[y-1][x] = numbers[y-1][x], numbers[y][x]
+                        shift_sound.play()
                         if endgame(numbers, ideal) == 0:
+                            win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
@@ -194,7 +208,9 @@ while True:
                     (event.mod & pygame.KMOD_SHIFT):
                     if numbers[y][x] == 0:
                         numbers[y][x], numbers[y][x+1] = numbers[y][x+1], numbers[y][x]
+                        shift_sound.play()
                         if endgame(numbers, ideal) == 0:
+                            win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
@@ -212,7 +228,9 @@ while True:
                     (event.mod & pygame.KMOD_SHIFT):
                 if numbers[y][x] == 0:
                         numbers[y][x], numbers[y][x-1] = numbers[y][x-1], numbers[y][x]
+                        shift_sound.play()
                         if endgame(numbers, ideal) == 0:
+                            win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
                             pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
