@@ -173,7 +173,7 @@ while True:
                             win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
-                            pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                            pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                             screen.fill(BLACK)  # Очистка экрана после задержки
                             pygame.display.flip()
                             sys.exit()
@@ -193,7 +193,7 @@ while True:
                             win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
-                            pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                            pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                             screen.fill(BLACK)  # Очистка экрана после задержки
                             pygame.display.flip()
                             sys.exit()
@@ -213,7 +213,7 @@ while True:
                             win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
-                            pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                            pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                             screen.fill(BLACK)  # Очистка экрана после задержки
                             pygame.display.flip()
                             sys.exit()
@@ -233,7 +233,7 @@ while True:
                             win_sound.play()
                             draw_popup_message("ПОБЕДА!! ГОЙДА!! ГОЛ!!", RED)
                             pygame.display.flip()  # Обновление экрана
-                            pygame.time.delay(1500)  # Задержка перед исчезновением сообщения
+                            pygame.time.delay(2500)  # Задержка перед исчезновением сообщения
                             screen.fill(BLACK)  # Очистка экрана после задержки
                             pygame.display.flip()
                             sys.exit()
